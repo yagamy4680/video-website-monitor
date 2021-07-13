@@ -1,5 +1,29 @@
 
+const MONITOR_SERVER = 'http://127.0.0.1:3000'
+
+class Collector {
+    constructor( opts={} ) {
+        this.opts = opts;
+        this.urls = [];
+    }
+
+    addUrl(url) {
+        this.urls.push(url);
+    }
+
+    getUrls() {
+        let {urls} = this;
+        this.urls = [];
+        return urls;
+    }
+}
+
+window.collector = new Collector();
+
+
 // Example POST method implementation:
+// Inspired by https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+//
 async function postData(url = '', data = {}) {
     // Default options are marked with *
     const response = await fetch(url, {
@@ -8,19 +32,22 @@ async function postData(url = '', data = {}) {
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         redirect: 'follow', // manual, *follow, error
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    // return response.json(); // parses JSON response into native JavaScript objects
+    return response.text();
   }
   
 chrome.webRequest.onCompleted.addListener(
     function(details) {
+        let {collector} = window;
         console.log(`onCompleted.x => ${details.url}`);
+        collector.addUrl(details.url);
     },
     {urls: [
         "*://*.youtube.com/*"
@@ -29,10 +56,15 @@ chrome.webRequest.onCompleted.addListener(
 
 chrome.webRequest.onCompleted.addListener(
     function(details) {
+        let {collector} = window;
+        let urls = collector.getUrls();
+        let data = {urls, details};
         console.log(`onCompleted.6 => ${details.url}`);
-        postData('http://10.0.1.50:3040/api/v1/collect', details)
-            .then(data => {
-                console.log(`server responses ${data}`)
+        console.log(`data => ${JSON.stringify(data)}`);
+        console.log(`sending data to ${MONITOR_SERVER}`);
+        postData(`${MONITOR_SERVER}/api/v1/collect`, data)
+            .then(body => {
+                console.log(`server responses: ${body}`)
             });
     },
     {urls: [
