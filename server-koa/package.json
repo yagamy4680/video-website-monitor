@@ -1,0 +1,29 @@
+{
+    "name": "video-monitor-koa-server",
+    "version": "0.1.0",
+    "description": "",
+    "type": "module",
+    "main": "index.mjs",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node src/index.mjs"
+    },
+    "keywords": [],
+    "author": "",
+    "dependencies": {
+        "got": "*",
+        "koa": "*",
+        "koa-bodyparser": "*",
+        "metascraper": "*",
+        "metascraper-author": "*",
+        "metascraper-date": "*",
+        "metascraper-description": "*",
+        "metascraper-image": "*",
+        "metascraper-logo": "*",
+        "metascraper-clearbit": "*",
+        "metascraper-publisher": "*",
+        "metascraper-title": "*",
+        "metascraper-url": "*",
+        "moment": "*"
+    }
+}

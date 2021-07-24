@@ -1,5 +1,6 @@
 
-const MONITOR_SERVER = 'http://127.0.0.1:3000'
+// const MONITOR_SERVER = 'http://127.0.0.1:3000';
+const MONITOR_SERVER = 'http://10.0.1.60:3000';
 
 class Collector {
     constructor( opts={} ) {
