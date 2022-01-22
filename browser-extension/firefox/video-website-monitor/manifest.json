@@ -1,0 +1,27 @@
+{
+  "description": "Adds browser action icon to toolbar to choose user agent string from popup menu. See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples#user-agent-rewriter",
+  "manifest_version": 2,
+  "name": "Video Website Monitor",
+  "version": "1.0",
+  "homepage_url": "https://github.com/yagamy4680/video-website-monitor/blob/main/browser-extension/firefox/video-website-monitor/manifest.json",
+  "icons": {
+    "48": "icons/person-48.png"
+  },
+
+  "permissions": [
+    "webRequest",
+    "https://nuc54250a3.t2t.io",
+    "*://*.youtube.com/"
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_action": {
+    "default_icon": "icons/person-32.png",
+    "default_title": "Choose a user agent",
+    "default_popup": "popup/choose_ua.html"
+  }
+
+}
