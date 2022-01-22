@@ -60,7 +60,7 @@ app.use(async ctx => {
     const metadata = await METASCRAPER({ html, url });
     console.log(metadata);
 
-    const SLACK_URL = 'https://hooks.slack.com/services/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';
+    let SLACK_URL = process.env['SLACK_URL'];
     let text = `\`${name}\` is watching *${metadata.title}* https://www.youtube.com/watch?v=${docid} ( @yagamy @michelle ) \n\n \`\`\`${metadata.description}\`\`\``;
     let json = {text};
     try {
