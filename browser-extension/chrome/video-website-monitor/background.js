@@ -1,6 +1,5 @@
 
-// const MONITOR_SERVER = 'http://127.0.0.1:3000';
-const MONITOR_SERVER = 'http://10.0.1.60:3000';
+const MONITOR_SERVER = 'https://nuc54250a3.t2t.io';
 
 class Collector {
     constructor( opts={} ) {
@@ -19,7 +18,7 @@ class Collector {
     }
 }
 
-window.collector = new Collector();
+let collector = new Collector();
 
 
 // Example POST method implementation:
@@ -46,20 +45,9 @@ async function postData(url = '', data = {}) {
   
 chrome.webRequest.onCompleted.addListener(
     function(details) {
-        let {collector} = window;
-        console.log(`onCompleted.x => ${details.url}`);
-        collector.addUrl(details.url);
-    },
-    {urls: [
-        "*://*.youtube.com/*"
-    ]}
-);
-
-chrome.webRequest.onCompleted.addListener(
-    function(details) {
-        let {collector} = window;
+        let name = 'Aaron\'s Computer (Chrome)';
         let urls = collector.getUrls();
-        let data = {urls, details};
+        let data = {name, urls, details};
         console.log(`onCompleted.6 => ${details.url}`);
         console.log(`data => ${JSON.stringify(data)}`);
         console.log(`sending data to ${MONITOR_SERVER}`);

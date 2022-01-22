@@ -1,18 +1,16 @@
 {
-  "manifest_version": 2,
-
+  "manifest_version": 3,
   "name": "Video Website Monitor",
   "description": "This extension monitors video website visits, such as Youtube",
   "version": "1.0",
-
   "background": {
-   "scripts": ["background.js"]
- },
+    "service_worker": "background.js"
+  },
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "http://127.0.0.1:3000",
-    "http://10.0.1.60:3000",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*.t2t.io/",
     "*://*.youtube.com/"
   ]
 }
